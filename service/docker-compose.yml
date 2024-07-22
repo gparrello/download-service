@@ -4,6 +4,8 @@ volumes:
 
 services:
   prowlarr:
+    depends_on:
+      - qbittorrent
     restart: unless-stopped
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
@@ -48,11 +50,13 @@ services:
       retries: 3
 
   qbittorrent-notify:
+    depends_on:
+      - qbittorrent
     image: 'adevjoe/qbittorrent-notify:latest'
     environment:
       - QBITTORRENT_PASSWORD
       - QBITTORRENT_USERNAME=admin
-      - QBITTORRENT_HOST=qbittorrent
+      - QBITTORRENT_HOST=http://qbittorrent:8080
       - CHAT_ID
       - BOT_TOKEN
     restart: unless-stopped
