@@ -1,5 +1,62 @@
+volumes:
+  prowlarr:
+  qbittorrent:
+  # qbitmanage:
+
 services:
-  test:
-    image: busybox:latest
-    container_name: test-service
-    command: sh -c "while true; do echo 'hello world'; sleep 300; done"
+  prowlarr:
+    restart: unless-stopped
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr
+    ports:
+      - "8095:9696"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+    volumes:
+      - prowlarr:/config
+    dns:
+      - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:9696 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  qbittorrent:
+    restart: unless-stopped
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent
+    ports:
+      - "7080:8080"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+      - WEBUI_PORTS=8080/tcp,8080/udp
+    volumes:
+      - qbittorrent:/config
+      - /data:/data  # TODO: requires change of ownership to UID:GID
+    dns:
+        - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8080 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # qbitmanage:
+  #   container_name: qbitmanage
+  #   image: ghcr.io/hotio/qbitmanage
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - UMASK=002
+  #     - TZ=Europe/Madrid
+  #     - ARGS
+  #   volumes:
+  #     - qbitmanage:/config
+  #     - /data:/data
