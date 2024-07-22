@@ -46,3 +46,13 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+  qbittorrent-notify:
+    image: 'adevjoe/qbittorrent-notify:latest'
+    environment:
+      - QBITTORRENT_PASSWORD
+      - QBITTORRENT_USERNAME=admin
+      - QBITTORRENT_HOST=qbittorrent
+      - CHAT_ID
+      - BOT_TOKEN
+    restart: always
