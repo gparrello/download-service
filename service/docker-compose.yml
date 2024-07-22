@@ -55,4 +55,5 @@ services:
       - QBITTORRENT_HOST=qbittorrent
       - CHAT_ID
       - BOT_TOKEN
-    restart: always
+    restart: unless-stopped
+    container_name: qbittorrent-notify 
