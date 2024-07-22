@@ -60,4 +60,6 @@ services:
       - CHAT_ID
       - BOT_TOKEN
     restart: unless-stopped
-    container_name: qbittorrent-notify 
+    container_name: qbittorrent-notify
+    dns:
+    - 10.80.0.2
