@@ -11,7 +11,11 @@ services:
     image: ghcr.io/hotio/prowlarr
     ports:
       - "8095:9696"
+    networks:
+      - internal-proxy
     environment:
+      - VIRTUAL_HOST=prowlarr.lan
+      - VIRTUAL_PORT=9696
       - PUID=1000
       - PGID=1000
       - UMASK=002
@@ -32,7 +36,11 @@ services:
     image: ghcr.io/hotio/qbittorrent
     ports:
       - "7080:8080"
+    networks:
+      - internal-proxy
     environment:
+      - VIRTUAL_HOST=torrent.lan
+      - VIRTUAL_PORT=8080
       - PUID=1000
       - PGID=1000
       - UMASK=002
