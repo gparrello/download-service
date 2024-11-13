@@ -1,3 +1,7 @@
+networks:
+  internal-proxy:
+    external: true
+
 volumes:
   prowlarr:
   qbittorrent:
