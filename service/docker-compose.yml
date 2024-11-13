@@ -13,8 +13,6 @@ services:
     restart: unless-stopped
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
-    ports:
-      - "8095:9696"
     networks:
       - internal-proxy
     environment:
@@ -38,8 +36,6 @@ services:
     restart: unless-stopped
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent
-    ports:
-      - "7080:8080"
     networks:
       - internal-proxy
     environment:
