@@ -1,4 +1,6 @@
 networks:
+  download-service:
+    attachable: true
   internal-proxy:
     external: true
 
@@ -14,6 +16,7 @@ services:
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
     networks:
+      - download-service
       - internal-proxy
     environment:
       - VIRTUAL_HOST=prowlarr.lan
@@ -37,6 +40,7 @@ services:
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent
     networks:
+      - download-service
       - internal-proxy
     environment:
       - VIRTUAL_HOST=torrent.lan
