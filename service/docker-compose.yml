@@ -1,5 +1,6 @@
 networks:
   download-service:
+    name: download-service
     attachable: true
   internal-proxy:
     external: true
